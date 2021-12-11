@@ -8,7 +8,7 @@ if __name__ == "__main__":
     writer = SummaryWriter()
     write_log = True
     image_size = (512, 512)
-    batch_size = 5
+    batch_size = 8
     test_batch_size = 1
     workers = 1
     ngpu = 1
@@ -22,18 +22,18 @@ if __name__ == "__main__":
     train_png_path = "/home/users/kleinerwal/Download/Rail19/rs19_bbox/train_img"
     test_json_path = "/home/users/kleinerwal/Download/Rail19/rs19_bbox/comb_test.json"
     test_png_path = "/home/users/kleinerwal/Download/Rail19/rs19_bbox/test_img"
-    weights_path = '/home/users/kleinerwal/py/Myyolov3/train_yolov3__2021-12-06_19_9/checkpoints/000042_g.model'
+    weights_path = '/home/users/kleinerwal/py/Myyolov3_Udacity/train_yolov3__2021-12-06_19_9/checkpoints/000042_g.model'
     device = torch.device("cuda:0" if (torch.cuda.is_available() and ngpu > 0) else "cpu")
     print("Using {}".format(device))
 
     if write_log:
         log_folder = logfile("Yolv3_rail19")
 
-    net = ModelMain()
+    net = ModelMain(class_num)
     for name, parameter in net.named_parameters():
         if parameter.requires_grad and "darknet53" in name:
             parameter.requires_grad = False
-    test_net = ModelMain()
+    test_net = ModelMain(class_num)
     net.to(device)
     net.apply(weights_init)
     # load weights

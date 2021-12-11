@@ -3,9 +3,9 @@ import torch
 
 
 class ModelMain(nn.Module):
-    def __init__(self):
+    def __init__(self, class_num):
         super(ModelMain, self).__init__()
-        self.class_num = 12
+        self.class_num = class_num
         self.bbox_num = 3
         self.loc_conf_num = 5
 
