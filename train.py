@@ -7,29 +7,32 @@ from tqdm import tqdm
 if __name__ == "__main__":
     writer = SummaryWriter()
     write_log = True
-    image_size = (384, 384)
+    image_size = (512, 512)
     batch_size = 5
     test_batch_size = 1
     workers = 1
     ngpu = 1
     lr = 1e-5
-    epochs = 200
-    class_num = 12
+    epochs = 100
+    class_num = 13
     anchors = [[[116, 90], [156, 198], [373, 326]],
                [[30, 61], [62, 45], [59, 119]],
                [[10, 13], [16, 30], [33, 23]]]
-    train_json_path = "/mnt/Jan_data/Data/Object_detetction_data/self_driving_2000/train.json"
-    train_png_path = "/mnt/Jan_data/Data/Object_detetction_data/self_driving_2000/train_/train"
-    test_json_path = "/mnt/Jan_data/Data/Object_detetction_data/self_driving_2000/test.json"
-    test_png_path = "/mnt/Jan_data/Data/Object_detetction_data/self_driving_2000/test_/test"
-    weights_path = '/mnt/Jan_data/pycharm_file/myyolo/train_yolov3_2000_2021-11-19_17_3/checkpoints/000100_g.model'
+    train_json_path = "/home/users/kleinerwal/Download/Rail19/rs19_bbox/comb_trai.json"
+    train_png_path = "/home/users/kleinerwal/Download/Rail19/rs19_bbox/train_img"
+    test_json_path = "/home/users/kleinerwal/Download/Rail19/rs19_bbox/comb_test.json"
+    test_png_path = "/home/users/kleinerwal/Download/Rail19/rs19_bbox/test_img"
+    weights_path = '/home/users/kleinerwal/py/Myyolov3/train_yolov3__2021-12-06_19_9/checkpoints/000042_g.model'
     device = torch.device("cuda:0" if (torch.cuda.is_available() and ngpu > 0) else "cpu")
     print("Using {}".format(device))
 
     if write_log:
-        log_folder = logfile("yolov3_2000")
+        log_folder = logfile("Yolv3_rail19")
 
     net = ModelMain()
+    for name, parameter in net.named_parameters():
+        if parameter.requires_grad and "darknet53" in name:
+            parameter.requires_grad = False
     test_net = ModelMain()
     net.to(device)
     net.apply(weights_init)
