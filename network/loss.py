@@ -3,12 +3,12 @@ from network.Iou_nms import *
 
 
 class YoloLoss(nn.Module):
-    def __init__(self, anchors, device, size):
+    def __init__(self, anchors, device, size, num_class):
         super(YoloLoss, self).__init__()
         self.img_size = size
         self.anchors = anchors  # (3)
         self.device = device
-        self.num_classes = 12
+        self.num_classes = num_class
         self.bbox_attrs = 5 + self.num_classes
         self.num_anchors = len(self.anchors)
         self.lambda_xy = 2.5

@@ -36,9 +36,9 @@ if __name__ == "__main__":
     test_net = ModelMain()
     net.to(device)
     net.apply(weights_init)
-    # # load weights
-    # net.load_state_dict(
-    #     torch.load(weights_path))
+    # load weights
+    net.load_state_dict(
+        torch.load(weights_path))
 
     dataloader = mydataloder(train_json_path, image_size,
                              batch_size=batch_size, workers=workers, shuffle_=True,
@@ -52,7 +52,7 @@ if __name__ == "__main__":
     iters = 0
     test_iter = 0
     for i in range(3):
-        yolo_loss.append(YoloLoss(anchors[i], device, image_size))
+        yolo_loss.append(YoloLoss(anchors[i], device, image_size,class_num))
 
     for epoch in range(epochs):
         print('Epoch :{}'.format(epoch))
